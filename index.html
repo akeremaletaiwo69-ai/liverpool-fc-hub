@@ -1,131 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liverpool FC Hub</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#c8102e">
+<title>Liverpool FC Hub</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            color: #222;
-        }
+<style>
+*{box-sizing:border-box}
 
-        header {
-            background: #c8102e;
-            color: white;
-            text-align: center;
-            padding: 30px 15px;
-        }
+body{
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:#080808;
+ color:#fff;
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-        }
+header{
+ padding:30px 15px;
+ text-align:center;
+ background:linear-gradient(135deg,#c8102e,#5c0010);
+}
 
-        nav {
-            background: #111;
-            text-align: center;
-            padding: 15px;
-        }
+header h1{
+ margin:0;
+ font-size:32px;
+}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 12px;
-            font-weight: bold;
-        }
+header p{
+ margin:8px 0 0;
+ opacity:.9;
+}
 
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            background: white;
-        }
+nav{
+ display:flex;
+ overflow-x:auto;
+ gap:8px;
+ padding:10px;
+ background:#111;
+ position:sticky;
+ top:0;
+ z-index:20;
+}
 
-        .hero h2 {
-            color: #c8102e;
-        }
+nav label{
+ flex:0 0 auto;
+ background:#222;
+ color:#fff;
+ padding:12px 16px;
+ border-radius:25px;
+ font-weight:bold;
+ font-size:13px;
+ cursor:pointer;
+}
 
-        .hero p {
-            font-size: 18px;
-            line-height: 1.6;
-        }
+nav label:hover{
+ background:#c8102e;
+}
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 30px 20px;
-        }
+input{
+ display:none;
+}
 
-        .card {
-            background: white;
-            width: 280px;
-            padding: 25px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
+main{
+ width:100%;
+ padding:15px;
+}
 
-        .card h3 {
-            color: #c8102e;
-        }
+.page{
+ display:none;
+ max-width:1000px;
+ margin:auto;
+}
 
-        footer {
-            background: #111;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+#home:checked~main .home,
+#news:checked~main .news,
+#fixtures:checked~main .fixtures,
+#results:checked~main .results,
+#cups:checked~main .cups,
+#players:checked~main .players,
+#transfers:checked~main .transfers,
+#club:checked~main .club{
+ display:block;
+}
+
+.card{
+ background:#151515;
+ border:1px solid #292929;
+ border-radius:18px;
+ padding:20px;
+ margin-bottom:15px;
+ box-shadow:0 8px 25px rgba(0,0,0,.3);
+}
+
+.hero{
+ background:linear-gradient(135deg,#1b1b1b,#30000a);
+ border-left:5px solid #c8102e;
+}
+
+h2{
+ color:#ff3048;
+ margin-top:0;
+}
+
+h3{
+ color:#fff;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:12px;
+}
+
+.stat{
+ background:linear-gradient(135deg,#c8102e,#790015);
+ padding:20px;
+ border-radius:16px;
+ text-align:center;
+}
+
+.stat b{
+ display:block;
+ font-size:28px;
+ margin-bottom:5px;
+}
+
+.match{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ padding:15px;
+ margin:9px 0;
+ background:#202020;
+ border-radius:12px;
+ border:1px solid #303030;
+}
+
+.date{
+ color:#ff5367;
+ font-weight:bold;
+ min-width:90px;
+}
+
+.score{
+ font-weight:bold;
+}
+
+.badge{
+ display:inline-block;
+ background:#c8102e;
+ padding:6px 10px;
+ border-radius:20px;
+ margin:3px;
+ font-size:12px;
+ font-weight:bold;
+}
+
+.player{
+ display:inline-block;
+ padding:11px 14px;
+ margin:5px;
+ background:#222;
+ border-radius:12px;
+ border:1px solid #333;
+}
+
+.news{
+ border-left:3px solid #c8102e;
+}
+
+.notice{
+ background:#332900;
+ border-left:5px solid #e0a400;
+ padding:15px;
+ border-radius:10px;
+ color:#ffe9a6;
+}
+
+footer{
+ text-align:center;
+ padding:30px 15px;
+ background:#000;
+ color:#aaa;
+}
+
+@media(max-width:600px){
+ header h1{font-size:25px}
+ .match{
+  flex-direction:column;
+  align-items:flex-start;
+ }
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🔴 Liverpool FC Hub</h1>
-        <p>Your home for Liverpool FC news, updates and more.</p>
-    </header>
+<input type="radio" name="tab" id="home" checked>
+<input type="radio" name="tab" id="news">
+<input type="radio" name="tab" id="fixtures">
+<input type="radio" name="tab" id="results">
+<input type="radio" name="tab" id="cups">
+<input type="radio" name="tab" id="players">
+<input type="radio" name="tab" id="transfers">
+<input type="radio" name="tab" id="club">
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-    </nav>
+<header>
+<h1>🔴 LIVERPOOL FC HUB</h1>
+<p>News • Fixtures • Results • Squad • Transfers • Anfield</p>
+</header>
 
-    <section class="hero">
-        <h2>Welcome to Liverpool FC Hub</h2>
-        <p>
-            Stay connected with the latest Liverpool FC news,
-            match updates, player information and fan content.
-        </p>
-    </section>
+<nav>
+<label for="home">HOME</label>
+<label for="news">NEWS</label>
+<label for="fixtures">FIXTURES</label>
+<label for="results">RESULTS</label>
+<label for="cups">CUPS</label>
+<label for="players">PLAYERS</label>
+<label for="transfers">TRANSFERS</label>
+<label for="club">CLUB</label>
+</nav>
 
-    <section class="cards">
+<main>
 
-        <div class="card">
-            <h3>⚽ Match Updates</h3>
-            <p>Follow Liverpool's latest matches and results.</p>
-        </div>
+<section class="page home">
 
-        <div class="card">
-            <h3>📰 Latest News</h3>
-            <p>Get the latest updates from around the club.</p>
-        </div>
+<div class="card hero">
+<h2>Welcome to Liverpool FC Hub 🔴</h2>
+<p>
+Your Liverpool men's-team dashboard for the 2026/27 season.
+</p>
+<span class="badge">LFC</span>
+<span class="badge">2026/27</span>
+<span class="badge">ANFIELD</span>
+</div>
 
-        <div class="card">
-            <h3>🔴 Liverpool Fans</h3>
-            <p>A place for Liverpool supporters to connect.</p>
-        </div>
+<div class="grid">
 
-    </section>
+<div class="stat">
+<b>2</b>
+Premier League Matches
+</div>
 
-    <footer>
-        <p>© 2026 Liverpool FC Hub</p>
-        <p>You'll Never Walk Alone ❤️</p>
-    </footer>
+<div class="stat">
+<b>2</b>
+Points
+</div>
+
+<div class="stat">
+<b>4</b>
+Goals Scored
+</div>
+
+<div class="stat">
+<b>4</b>
+Goals Conceded
+</div>
+
+</div>
+
+<div class="card">
+<h2>Next Match</h2>
+
+<div class="match">
+<span class="date">04 SEP</span>
+<strong>Ipswich Town vs Liverpool</strong>
+<span class="score">20:00</span>
+</div>
+
+<p>
+Bradley Barcola is available for consideration for his Liverpool debut.
+</p>
+</div>
+
+<div class="card">
+<h2>Club Leadership</h2>
+
+<p><b>Head Coach:</b> Andoni Iraola</p>
+<p><b>Sporting Director:</b> Richard Hughes</p>
+<p><b>Home:</b> Anfield</p>
+<p><b>Training Centre:</b> AXA Training Centre</p>
+</div>
+
+</section>
+
+
+<section class="page news">
+
+<div class="card hero">
+<h2>📰 Latest Liverpool News</h2>
+<p>Latest official Liverpool information.</p>
+</div>
+
+<div class="card news">
+<h3>⚡ Bradley Barcola arrives</h3>
+<p>
+Bradley Barcola has joined Liverpool from Paris Saint-Germain
+and is available for consideration ahead of the Ipswich match.
+</p>
+</div>
+
+<div class="card news">
+<h3>🔴 Barcola could make his debut</h3>
+<p>
+Liverpool head coach Andoni Iraola confirmed that Barcola is
+available for the trip to Ipswich.
+</p>
+</div>
+
+<div class="card news">
+<h3>🚑 Ekitike remains sidelined</h3>
+<p>
+Hugo Ekitike remains out with the Achilles injury he suffered
+in April. No confirmed return date has been given.
+</p>
+</div>
+
+<div class="card news">
+<h3>🚑 Conor Bradley</h3>
+<p>
+Bradley remains sidelined following his knee injury.
+No confirmed return timescale has been announced.
+</p>
+</div>
+
+<div class="card news">
+<h3>🔄 Joe Gomez</h3>
+<p>
+Joe Gomez is expected to begin team training next week
+following his muscle injury.
+</p>
+</div>
+
+<div class="card news">
+<h3>🏋️ Giovanni Leoni</h3>
+<p>
+The plan is for Leoni to begin group training during the
+international break.
+</p>
+</div>
+
+<div class="card news">
+<h3>⚽ Federico Chiesa</h3>
+<p>
+Chiesa is expected to resume team training around the
+international break.
+</p>
+</div>
+
+<div class="card">
+<h3>🏟️ Anfield</h3>
+<p>
+Liverpool's home stadium remains the centre of the club's
+matchday experience and European nights.
+</p>
+</div>
+
+<div class="card">
+<h3>🏋️ AXA Training Centre</h3>
+<p>
+The AXA Training Centre in Kirkby remains Liverpool's
+first-team training base.
+</p>
+</div>
+
+<div class="notice">
+News and player availability can change. Always update this
+section when Liverpool publish new official information.
+</div>
+
+</section>
+
+
+<section class="page fixtures">
+
+<div class="card hero">
+<h2>📅 FIXTURES</h2>
+<p>2026/27 Liverpool men's fixtures.</p>
+</div>
+
+<div class="card">
+<h2>Premier League</h2>
+
+<div class="match">
+<span class="date">23 AUG</span>
+<strong>Newcastle United vs Liverpool</strong>
+<span class="score">2-2</span>
+</div>
+
+<div class="match">
+<span class="date">29 AUG</span>
+<strong>Liverpool vs Nottingham Forest</strong>
+<span class="score">2-2</span>
+</div>
+
+<div class="match">
+<span class="date">04 SEP</span>
+<strong>Ipswich Town vs Liverpool</strong>
+<span class="score">20:00</span>
+</div>
+
+<div class="match">
+<span class="date">12 SEP</span>
+<strong>Liverpool vs Fulham</strong>
+<span class="score">15:00</span>
+</div>
+
+<div class="notice">
+Additional fixture information should be updated from the
+official Liverpool fixture list whenever dates or kick-off
+times change.
+</div>
+
+</div>
+
+<div class="card">
+<h2>⭐ Champions League</h2>
+
+<div class="match">
+<span class="date">09 SEP</span>
+<strong>Liverpool vs Atletico Madrid</strong>
+<span class="score">20:00</span>
+</div>
+
+<div class="notice">
+More Champions League fixtures will be displayed here as
+they are confirmed by the official fixture schedule.
+</div>
+
+</div>
+
+<div class="card">
+<h2>🏆 Carabao Cup</h2>
+
+<div class="match">
+<span class="date">15 SEP</span>
+<strong>Liverpool vs Tottenham Hotspur</strong>
+<span class="score">20:00</span>
+</div>
+
+</div>
+
+<div class="card">
+<h2>🏆 FA Cup</h2>
+<p>
+Liverpool's FA Cup fixtures will appear here once the opponent
+and date are confirmed.
+</p>
+</div>
+
+</section>
+
+
+<section class="page results">
+
+<div class="card hero">
+<h2>📊 RESULTS</h2>
+</div>
+
+<div class="card">
+
+<div class="match">
+<span class="date">23 AUG</span>
+<strong>Newcastle United 2-2 Liverpool</strong>
+<span class="score">DRAW</span>
+</div>
+
+<div class="match">
+<span class="date">29 AUG</span>
+<strong>Liverpool 2-2 Nottingham Forest</strong>
+<span class="score">DRAW</span>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Season Record</h2>
+<p><b>Played:</b> 2</p>
+<p><b>Wins:</b> 0</p>
+<p><b>Draws:</b> 2</p>
+<p><b>Losses:</b> 0</p>
+<p><b>Goals:</b> 4 scored / 4 conceded</p>
+</div>
+
+</section>
+
+
+<section class="page cups">
+
+<div class="card hero">
+<h2>🏆 COMPETITIONS</h2>
+</div>
+
+<div class="card">
+<h3>🏆 Premier League</h3>
+<p>Liverpool's English top-flight league campaign.</p>
+</div>
+
+<div class="card">
+<h3>⭐ UEFA Champions League</h3>
+<p>Liverpool's European campaign.</p>
+</div>
+
+<div class="card">
+<h3>🏆 Carabao Cup</h3>
+<p>Liverpool's League Cup campaign.</p>
+</div>
+
+<div class="card">
+<h3>🏆 FA Cup</h3>
+<p>Liverpool's FA Cup campaign.</p>
+</div>
+
+</section>
+
+
+<section class="page players">
+
+<div class="card hero">
+<h2>👥 PLAYERS</h2>
+<p>Current Liverpool men's squad information.</p>
+</div>
+
+<div class="card">
+<h2>🥅 Goalkeepers</h2>
+
+<span class="player">Alisson Becker</span>
+<span class="player">Giorgi Mamardashvili</span>
+<span class="player">Vitezslav Jaros</span>
+<span class="player">Freddie Woodman</span>
+</div>
+
+<div class="card">
+<h2>🛡️ Defenders</h2>
+
+<span class="player">Virgil van Dijk</span>
+<span class="player">Ibrahima Konate</span>
+<span class="player">Joe Gomez</span>
+<span class="player">Jeremie Frimpong</span>
+<span class="player">Milos Kerkez</span>
+<span class="player">Conor Bradley</span>
+<span class="player">Giovanni Leoni</span>
+<span class="player">Ronald Araujo</span>
+</div>
+
+<div class="card">
+<h2>🎯 Midfielders</h2>
+
+<span class="player">Alexis Mac Allister</span>
+<span class="player">Ryan Gravenberch</span>
+<span class="player">Dominik Szoboszlai</span>
+<span class="player">Florian Wirtz</span>
+<span class="player">Wataru Endo</span>
+<span class="player">Curtis Jones</span>
+</div>
+
+<div class="card">
+<h2>⚡ Attackers</h2>
+
+<span class="player">Mohamed Salah</span>
+<span class="player">Cody Gakpo</span>
+<span class="player">Alexander Isak</span>
+<span class="player">Hugo Ekitike</span>
+<span class="player">Bradley Barcola</span>
+<span class="player">Federico Chiesa</span>
+</div>
+
+<div class="card">
+<h2>🩺 Availability</h2>
+
+<p><b>Bradley Barcola:</b> Available for consideration.</p>
+<p><b>Hugo Ekitike:</b> Sidelined.</p>
+<p><b>Conor Bradley:</b> Sidelined.</p>
+<p><b>Joe Gomez:</b> Expected to return to team training next week.</p>
+<p><b>Federico Chiesa:</b> Expected back in team training around the international break.</p>
+<p><b>Giovanni Leoni:</b> Planned return to group training during the international break.</p>
+</div>
+
+</section>
+
+
+<section class="page transfers">
+
+<div class="card hero">
+<h2>🔄 TRANSFER MARKET</h2>
+</div>
+
+<div class="card">
+<h3>⚡ Bradley Barcola</h3>
+<p><b>From:</b> Paris Saint-Germain</p>
+<p><b>Status:</b> Liverpool player</p>
+<p><b>Squad number:</b> 29</p>
+<p>
+Barcola completed his Liverpool move and is available for
+consideration against Ipswich.
+</p>
+</div>
+
+<div class="card">
+<h3>🔥 Alexander Isak</h3>
+<p><b>From:</b> Newcastle United</p>
+<p><b>Status:</b> Liverpool player</p>
+</div>
+
+<div class="card">
+<h3>✨ Florian Wirtz</h3>
+<p><b>From:</b> Bayer Leverkusen</p>
+<p><b>Status:</b> Liverpool player</p>
+</div>
+
+<div class="card">
+<h3>🚀 Jeremie Frimpong</h3>
+<p><b>From:</b> Bayer Leverkusen</p>
+<p><b>Status:</b> Liverpool player</p>
+</div>
+
+<div class="card">
+<h3>🔴 Hugo Ekitike</h3>
+<p><b>From:</b> Eintracht Frankfurt</p>
+<p><b>Status:</b> Liverpool player</p>
+<p>
+Ekitike remains part of the Liverpool squad.
+</p>
+</div>
+
+</section>
+
+
+<section class="page club">
+
+<div class="card hero">
+<h2>🏟️ CLUB CENTRE</h2>
+</div>
+
+<div class="card">
+<h2>🏟️ Anfield</h2>
+<p>
+Liverpool Football Club's historic home stadium.
+</p>
+</div>
+
+<div class="card">
+<h2>🏋️ AXA Training Centre</h2>
+<p>
+Liverpool's first-team training base in Kirkby.
+</p>
+</div>
+
+<div class="card">
+<h2>👔 Sporting Director</h2>
+<p>
+<b>Richard Hughes</b>
+</p>
+<p>
+Liverpool's sporting director.
+</p>
+</div>
+
+<div class="card">
+<h2>🧠 Head Coach</h2>
+<p>
+<b>Andoni Iraola</b>
+</p>
+<p>
+Liverpool's men's head coach.
+</p>
+</div>
+
+<div class="card">
+<h2>🏆 Competitions</h2>
+<p>Premier League</p>
+<p>UEFA Champions League</p>
+<p>FA Cup</p>
+<p>Carabao Cup</p>
+</div>
+
+<div class="card">
+<h2>📱 App Sections</h2>
+<p>✓ Home dashboard</p>
+<p>✓ Latest news</p>
+<p>✓ Fixtures</p>
+<p>✓ Results</p>
+<p>✓ Cups</p>
+<p>✓ Players</p>
+<p>✓ Transfers</p>
+<p>✓ Anfield</p>
+<p>✓ AXA Training Centre</p>
+<p>✓ Injury updates</p>
+<p>✓ Sporting Director</p>
+</div>
+
+</section>
+
+</main>
+
+<footer>
+<p><b>🔴 LIVERPOOL FC HUB</b></p>
+<p>2026/27 Season</p>
+<p>Built for mobile • Acode compatible</p>
+</footer>
 
 </body>
 </html>
